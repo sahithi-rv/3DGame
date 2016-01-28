@@ -1,12 +1,12 @@
 #include "resources.h"
 
-class platform{
+class Cuboid{
 public:
 	VAO * cube;
 	double cx,cy,cz;int cube_no;
 	double sideX,sideY,sideZ;
 	GLfloat * vertex_buffer,*color_buffer;
-	platform(double c_x,double c_y,double c_z,double sx,double sy,double sz,int cno ){
+	Cuboid(double c_x,double c_y,double c_z,double sx,double sy,double sz,int cno ){
 		cx = c_x;
 		cy = c_y;
 		cz = c_z;

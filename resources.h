@@ -1,9 +1,10 @@
-
+#include <bits/stdc++.h>
+/*
 #include <iostream>
 #include <cmath>
 #include <fstream>
 #include <vector>
-
+#include <array>*/
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define GLM_FORCE_RADIANS
@@ -12,6 +13,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <ctime>
 
+#define DITCHES 1
+#define OBSTACLES 1
+#define STARTX 0
+#define STARTY 0
+#define STARTZ 0
 #define HC 10
 #define VC 10
 #define MEW 0.5
@@ -74,6 +80,8 @@ VAO *rect1;
 
 float camera_rotation_angle = 90;
 
+set< pair<pair<double,double>,double> > obs;
+set< pair<double,double> > dit;
 /* Function to load Shaders - Use it as it is */
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path) {
 
@@ -471,4 +479,13 @@ bool isInBW( pair<float,float> foot , pair<float,float> pt1 , pair<float,float> 
 	else
 		return false;
 
+}
+
+void getObstaclePositions(){
+	
+	obs.insert(MP(MP(2,1),-2));
+}
+
+void getDitchPositions(){
+	dit.insert(MP(4,0));
 }

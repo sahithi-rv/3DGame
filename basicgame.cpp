@@ -1,6 +1,6 @@
 #include "classes.h"
 
-platform * cube[HC][VC];
+Cuboid * platform[HC][VC] , *obstacles[OBSTACLES];
 
 void draw ()
 {
@@ -27,8 +27,14 @@ void draw ()
 
   rep(i,0,HC-1){
     rep(j,0,VC-1){
-      cube[i][j]->renderCube(VP);
+      if( dit.find(MP(i,j)) ==dit.end())
+        platform[i][j]->renderCube(VP);
     }
+  }
+  int ind=0;
+  TR(obs,it){
+    obstacles[ind]->renderCube(VP);
+    ind++;
   }
   // Increment angles
   float increments = 1;
@@ -42,13 +48,22 @@ void initGL (GLFWwindow* window, int width, int height)
 {
   rep(i,0,HC-1){
     rep(j,0,VC-1){
-      cube[i][j]->setInitVertices();
-      cube[i][j]->setInitColors(1,1,1);
-      cube[i][j]->setInitColors(5,1,0,1);
-      cube[i][j]->setInitColors(2,1,1,0);
-      cube[i][j]->setInitColors(1,0,1,0);
-      cube[i][j]->createCube();
+      platform[i][j]->setInitVertices();
+      platform[i][j]->setInitColors(1,1,1);
+      platform[i][j]->setInitColors(5,1,0,1);
+      platform[i][j]->setInitColors(2,1,1,0);
+      platform[i][j]->setInitColors(1,0,1,0);
+      platform[i][j]->createCube();
     }
+  }
+
+  rep(i,0,SZ(obs)-1){
+      obstacles[i]->setInitVertices();
+      obstacles[i]->setInitColors(1,1,1);
+      obstacles[i]->setInitColors(5,1,0,1);
+      obstacles[i]->setInitColors(2,1,1,0);
+      obstacles[i]->setInitColors(1,0,1,0);
+      obstacles[i]->createCube();
   }
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "Sample_GL.vert", "Sample_GL.frag" );
@@ -74,12 +89,24 @@ int main (int argc, char** argv)
 
   GLFWwindow* window = initGLFW(width, height);
 
+  getObstaclePositions();
+  getDitchPositions();
   rep(i,0,HC-1){
     rep(j,0,VC-1){
-      cube[i][j] = new platform(0+j,0,0-i,1,1,1,i*VC+j);
+      platform[i][j] = new Cuboid(STARTX+j,STARTY,STARTZ-i,1,1,1,i*VC+j);
     }
   }
 
+  int ind=0;
+  TR(obs,it){
+    
+    obstacles[ind] = new Cuboid((*it).F.F,(*it).F.S,(*it).S,1,1,1,ind);
+    ind++;
+  }
+
+  TR(dit,it){
+    output2((*it).F,(*it).S);
+  }
 	initGL (window, width, height);
 
   double last_update_time = glfwGetTime(), current_time;
