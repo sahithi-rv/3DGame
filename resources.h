@@ -13,8 +13,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <ctime>
 
-#define DITCHES 1
-#define OBSTACLES 1
+#define DITCHES 3
+#define OBSTACLES 4
 #define STARTX 0
 #define STARTY 0
 #define STARTZ 0
@@ -72,6 +72,7 @@ struct GLMatrices {
     GLuint MatrixID;
 }Matrices;
 
+double eyex=4.5,eyey=6,eyez=-4.5;
 
 GLuint programID;
 typedef struct VAO VAO;
@@ -282,36 +283,8 @@ void reshapeWindow (GLFWwindow* window, int width, int height)
 }
 
 /**** player controls ****/
-void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-     // Function is called first on GLFW_PRESS.
 
-    if (action == GLFW_RELEASE) {
-        switch (key) {
-           /* case GLFW_KEY_C:
-                rectangle_rot_status = !rectangle_rot_status;
-                break;
-            case GLFW_KEY_P:
-                triangle_rot_status = !triangle_rot_status;
-                break;
-            case GLFW_KEY_X:
-                // do something ..
-                break;*/
-            default:
-                break;
-        }
-    }
-    else if (action == GLFW_PRESS) {
-        switch (key) {
-            case GLFW_KEY_ESCAPE:
-                quit(window);
-                break;
-            default:
-                break;
-        }
-    }
-}
-
+void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods);
 /* Executed for character input (like in text boxes) */
 void keyboardChar (GLFWwindow* window, unsigned int key)
 {
@@ -481,11 +454,21 @@ bool isInBW( pair<float,float> foot , pair<float,float> pt1 , pair<float,float> 
 
 }
 
+bool checkCollision(double dx,double dy,double dz);
+
+bool checkDitch();
+
 void getObstaclePositions(){
 	
 	obs.insert(MP(MP(2,1),-2));
+	obs.insert(MP(MP(3,1),-4));
+	obs.insert(MP(MP(0,1),-9));
+	obs.insert(MP(MP(8,1),-9));
+
 }
 
 void getDitchPositions(){
 	dit.insert(MP(4,0));
+	dit.insert(MP(2,8));
+	dit.insert(MP(0,3));
 }

@@ -163,4 +163,62 @@ public:
   		glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
   		draw3DObject(cube);
 	}
+
+	
+};
+
+class Player : public Cuboid
+{
+public:
+	/*VAO * cube;
+	double cx,cy,cz;int cube_no;
+	double sideX,sideY,sideZ;
+	GLfloat * vertex_buffer,*color_buffer;*/
+	double gravity,ext_force_y;
+	double vx,vy,vz;
+	Player(double c_x,double c_y,double c_z,double sx,double sy,double sz,double acc)
+	:Cuboid(c_x,c_y,c_z,sx,sy,sz,-1)
+	{
+		gravity = -1*acc;
+		ext_force_y = acc;
+		vx=vy=vz=0;
+	}
+
+	double getX(){ return cx ;}
+
+	double getZ(){ return cz ;}
+
+	double getY(){ return cy ;}
+
+	float getAY(){
+			return gravity;
+	}
+	float getEFY(){
+		return ext_force_y;
+	}
+
+	void setEFY(float EFY){
+		ext_force_y = EFY;
+	}
+
+
+	void updatePosition(double dx,double dy,double dz){
+		if(!checkCollision(dx,dy,dz)){
+			cx+=dx;
+			cy+=dy;
+			cz+=dz;
+			if(cx>9 || cx<0){
+				cx-=dx;
+			}
+			if(cz<-9 || cz>0){
+				cz-=dz;
+			}	
+		}
+	}
+
+	void updatePosition(double time){
+		cy+= vy + gravity*time + ext_force_y*time;
+  		vy+=gravity*time + ext_force_y*time;
+  		//output1(cy);
+	}
 };
