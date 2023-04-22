@@ -26,15 +26,15 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
            case GLFW_KEY_LEFT_SHIFT: 
               //output1("shift");
               if(glfwGetKey(window,GLFW_KEY_1)){
-              //  output1("1");
+                //output1("1");
                eyex=STARTX-1;eyey=5,eyez=STARTZ+1; 
               }
               else if(glfwGetKey(window,GLFW_KEY_2)){
-              //  output1("2");
+                //output1("2");
                eyex=STARTX-1;eyey=5,eyez=STARTZ-VC; 
               }
               else if(glfwGetKey(window,GLFW_KEY_3)){
-              //  output1("3");
+                //output1("3");
                eyex=STARTX+HC;eyey=5,eyez=STARTZ-VC; 
               }
               else if(glfwGetKey(window,GLFW_KEY_4)){
